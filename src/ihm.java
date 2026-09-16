@@ -20,6 +20,7 @@ public class ihm {
         int coefEtude = 4;
         int coefExploitation = 3;
         int coefValorisation = 7;
+        int coefPro = coefValorisation + coefExploitation + coefEtude;
         int coefTotal = (coefCulture + coefAnglais + coefMaths + coefEtude + coefExploitation + coefValorisation);
 
         // Initialisation des variables min & max
@@ -27,13 +28,14 @@ public class ihm {
         int pointsMax = (coefTotal * 20);
 
         // Initialisation des strings
-        String lV = ".";
+        char lV = 0;
 
-        // Initialisation des strings rattrapage ratrap = Choix de la matière ; repTrap = Si note supérieur à la précédente
-        String ratrap1 = "";
-        String ratrap2 = "";
-        String repTrap1 = "";
-        String repTrap2 = "";
+        // Initialisation des variables rattrapges ratrap = Choix de la matière ; repTrap = notes rattrapages
+        char raTrap1 = 0;
+        char raTrap2 = 0;
+        float repAng = 0;
+        float repCult = 0;
+        float repMath = 0;
 
         // Initialisation du DecimalFormat
         DecimalFormat monFormat = new DecimalFormat("00.00");
@@ -52,9 +54,9 @@ public class ihm {
         noteExploitation = In.readFloat();
         System.out.print("Votre note en Valorisation de la donnée et cybersécurité :\t");
         noteValorisation = In.readFloat();
-        System.out.println("Avez-vous choisi une Langue vivante ?");
-        lV = In.readString();
-        if (lV == "oui" || lV == "Oui") {
+        System.out.println("Avez-vous choisi une Langue vivante ?: y / n");
+        lV = In.readChar();
+        if ((lV == 'y') || (lV == 'Y')){
             System.out.print("Votre note en Langue vivante :\t");
             noteLv = In.readFloat();
         }
@@ -110,9 +112,12 @@ public class ihm {
         System.out.println("\tfacultative" + "\t\t\t\t\t\t" + "\t\t\t\t\tdessus de 10");
         System.out.println("=".repeat(140));
 
+        // Calcul moyenne pro
+        float moyennePro = (((noteEtude * coefEtude) + (noteExploitation * coefExploitation) + (noteValorisation * coefValorisation)) / coefPro);
         // Coefficient total, Points minimaux & Points totaux
         System.out.println("\t|Points minimums" + "\t\t|Coefficient Total" + "\t\t\t|Points Maximums" + "\t\t" + "|Points Totaux" + "\t\t|Moyenne de l'étudiant");
         System.out.println("\t " + pointsMin + "\t\t\t\t\t " + coefTotal + "\t\t\t\t\t\t\t " + pointsMax + "\t\t\t\t\t " + monFormat.format(pointsTotaux) + "\t\t\t\t " + monFormat.format(moyenneTotal));
+        System.out.println("Moyenne Pro : " + moyennePro);
 
         // Gestion des mentions
         if (moyenneTotal >= 16) {
@@ -126,44 +131,44 @@ public class ihm {
         } else if (moyenneTotal < 10 && (noteEtude >= 10 && noteExploitation >= 10 && noteValorisation >= 10)) {
             System.out.println("Vous allez au rattrapage, choisissez 2 matières parmis ces 3: \nAnglais\nCulture Générale\nMathématiques");
 
+
             // Demande pour l'Anglais
-            System.out.println("Avez-vous choisi le rattrapage d'Anglais ?");
-            ratrap1 = In.readString();
-            if (ratrap1.equalsIgnoreCase("Oui")) {
-                System.out.println("Votre nouvelle note est-elle supérieur à l'ancienne ?");
-                repTrap1 = In.readString();
-                if (repTrap1.equalsIgnoreCase("Oui")) {
-                    System.out.println("Saisissez votre nouvelle note d'Anglais : ");
-                    noteAnglais = In.readFloat();
+            System.out.println("Avez-vous choisi le rattrapage de Culture Générale ? : y / n");
+            raTrap1 = In.readChar();
+
+            // Boucle note rattrapage Anglais
+            if ((raTrap1 == 'y') || (raTrap1 == 'Y')) {
+                System.out.println("Saisissez votre nouvelle note de Culture Générale : ");
+                noteCulture = In.readFloat();
+                if (repAng > noteAnglais) {
+                    noteAnglais = repAng;
                 }
             }
 
-
             // Demande pour la culture générale
-            System.out.println("Avez-vous choisi le rattrapage de Culture Générale ?");
-            ratrap2 = In.readString();
-            if (ratrap2.equalsIgnoreCase("Oui")) {
-                System.out.println("Votre nouvelle note est-elle supérieur à l'ancienne ?");
-                repTrap2 = In.readString();
-                if (repTrap2.equalsIgnoreCase("Oui")) {
-                    System.out.println("Saisissez votre nouvelle note de Culture Générale : ");
-                    noteCulture = In.readFloat();
+            System.out.println("Avez-vous choisi le rattrapage de Culture Générale ? : y / n");
+            raTrap2 = In.readChar();
 
+            // Boucle note rattrapage Culture G
+            if ((raTrap2 == 'y') || (raTrap2 == 'Y')) {
+                System.out.println("Saisissez votre nouvelle note de Culture Générale : ");
+                noteCulture = In.readFloat();
+                if (repCult > noteCulture) {
+                    noteCulture = repCult;
                 }
             }
             // Demande pour les Maths, avec omission de cette partie si Anglais et Culture G. ont été choisi
-            if (ratrap1.equalsIgnoreCase("Oui") && ratrap2.equalsIgnoreCase("Oui"))
-            System.out.println("Avez-vous choisi le rattrapage de Mathématiques ?");
-            ratrap1 = In.readString();
-            if (ratrap1.equalsIgnoreCase("Oui")) {
-                System.out.println("Votre nouvelle note est-elle supérieur à l'ancienne ?");
-                ratrap2 = In.readString();
-                if (ratrap2.equalsIgnoreCase("Oui")) {
-                    System.out.println("Saisissez votre nouvelle note de Mathématiques : ");
-                    noteMaths = In.readFloat();
+            if (!((raTrap1 == 'y') || (raTrap1 == 'Y') && (raTrap2 == 'y') || (raTrap2 == 'Y'))) {
+                System.out.println("Avez-vous choisi le rattrapage de Mathématiques ? : y / n");
+                raTrap1 = In.readChar();
+                // Boucle note rattrapage Maths
+                if ((raTrap1 == 'y') || (raTrap1 == 'Y')) {
+                System.out.println("Saisissez votre nouvelle note de Mathématiques : ");
+                    if (repMath > noteMaths) {
+                        noteMaths = repMath;
+                    }
                 }
             }
-
             /* Traitement de la première note de rattrapage (Machine à gaz)
             if (ratrap1.equalsIgnoreCase("Anglais")) {
                 System.out.print("Votre note de rattrapage en " + ratrap1 + " si elle est supérieur à l'ancienne:");
