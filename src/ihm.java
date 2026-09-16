@@ -56,7 +56,7 @@ public class ihm {
         noteValorisation = In.readFloat();
         System.out.println("Avez-vous choisi une Langue vivante ?: y / n");
         lV = In.readChar();
-        if ((lV == 'y') || (lV == 'Y')){
+        if ((lV == 'y') || (lV == 'Y')) {
             System.out.print("Votre note en Langue vivante :\t");
             noteLv = In.readFloat();
         }
@@ -112,8 +112,10 @@ public class ihm {
         System.out.println("\tfacultative" + "\t\t\t\t\t\t" + "\t\t\t\t\tdessus de 10");
         System.out.println("=".repeat(140));
 
-        // Calcul moyenne pro
+        // Calcul moyenne pro pour la gestion des mentions
         float moyennePro = (((noteEtude * coefEtude) + (noteExploitation * coefExploitation) + (noteValorisation * coefValorisation)) / coefPro);
+
+
         // Coefficient total, Points minimaux & Points totaux
         System.out.println("\t|Points minimums" + "\t\t|Coefficient Total" + "\t\t\t|Points Maximums" + "\t\t" + "|Points Totaux" + "\t\t|Moyenne de l'étudiant");
         System.out.println("\t " + pointsMin + "\t\t\t\t\t " + coefTotal + "\t\t\t\t\t\t\t " + pointsMax + "\t\t\t\t\t " + monFormat.format(pointsTotaux) + "\t\t\t\t " + monFormat.format(moyenneTotal));
@@ -128,7 +130,7 @@ public class ihm {
             System.out.println("Vous avez votre BTS CIEL, mention assez bien !");
         } else if (moyenneTotal >= 10) {
             System.out.println("Vous avez votre BTS CIEL, sans mention");
-        } else if (moyenneTotal < 10 && (noteEtude >= 10 && noteExploitation >= 10 && noteValorisation >= 10)) {
+        } else if ((moyennePro >= 10) && (moyenneTotal >= 8)) {
             System.out.println("Vous allez au rattrapage, choisissez 2 matières parmis ces 3: \nAnglais\nCulture Générale\nMathématiques");
 
 
@@ -163,7 +165,7 @@ public class ihm {
                 raTrap1 = In.readChar();
                 // Boucle note rattrapage Maths
                 if ((raTrap1 == 'y') || (raTrap1 == 'Y')) {
-                System.out.println("Saisissez votre nouvelle note de Mathématiques : ");
+                    System.out.println("Saisissez votre nouvelle note de Mathématiques : ");
                     if (repMath > noteMaths) {
                         noteMaths = repMath;
                     }
