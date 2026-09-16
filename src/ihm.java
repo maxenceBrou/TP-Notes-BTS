@@ -30,12 +30,18 @@ public class ihm {
         // Initialisation des strings
         char lV = 0;
 
-        // Initialisation des variables rattrapges ratrap = Choix de la matière ; repTrap = notes rattrapages
+        // Initialisation des variables rattrapages ratrap = choix de la matière ; repTrap = notes rattrapages
         char raTrap1 = 0;
         char raTrap2 = 0;
         float repAng = 0;
         float repCult = 0;
         float repMath = 0;
+
+        // Ajoute de variables String redondante
+        String bravo = "Vous avez votre BTS CIEL,";
+        String demChoix = "Avez-vous choisi le rattrapage d";
+        String saiRattrap = "Saisissez votre nouvelle note d";
+
 
         // Initialisation du DecimalFormat
         DecimalFormat monFormat = new DecimalFormat("00.00");
@@ -123,24 +129,26 @@ public class ihm {
 
         // Gestion des mentions
         if (moyenneTotal >= 16) {
-            System.out.println("Vous avez votre BTS CIEL, mention très bien !");
+            System.out.println(bravo + " mention très bien !");
         } else if (moyenneTotal >= 14) {
-            System.out.println("Vous avez votre BTS CIEL, mention bien !");
+            System.out.println(bravo + " mention bien !");
         } else if (moyenneTotal >= 12) {
-            System.out.println("Vous avez votre BTS CIEL, mention assez bien !");
+            System.out.println(bravo + " mention assez bien !");
         } else if (moyenneTotal >= 10) {
-            System.out.println("Vous avez votre BTS CIEL, sans mention");
+            System.out.println(bravo + " sans mention");
         } else if ((moyennePro >= 10) && (moyenneTotal >= 8)) {
             System.out.println("Vous allez au rattrapage, choisissez 2 matières parmis ces 3: \nAnglais\nCulture Générale\nMathématiques");
 
 
             // Demande pour l'Anglais
-            System.out.println("Avez-vous choisi le rattrapage de Culture Générale ? : y / n");
+            System.out.println(".".repeat(30));
+            System.out.println(demChoix + "'Anglais ? : y / n");
             raTrap1 = In.readChar();
+            System.out.println(".".repeat(30));
 
             // Boucle note rattrapage Anglais
             if ((raTrap1 == 'y') || (raTrap1 == 'Y')) {
-                System.out.println("Saisissez votre nouvelle note de Culture Générale : ");
+                System.out.println(saiRattrap + "'Anglais : ");
                 noteCulture = In.readFloat();
                 if (repAng > noteAnglais) {
                     noteAnglais = repAng;
@@ -148,27 +156,32 @@ public class ihm {
             }
 
             // Demande pour la culture générale
-            System.out.println("Avez-vous choisi le rattrapage de Culture Générale ? : y / n");
+            System.out.println(".".repeat(30));
+            System.out.println(demChoix + "e Culture Générale ? : y / n");
             raTrap2 = In.readChar();
+            System.out.println(".".repeat(30));
 
             // Boucle note rattrapage Culture G
             if ((raTrap2 == 'y') || (raTrap2 == 'Y')) {
-                System.out.println("Saisissez votre nouvelle note de Culture Générale : ");
+                System.out.println(saiRattrap + "e Culture Générale : ");
                 noteCulture = In.readFloat();
                 if (repCult > noteCulture) {
                     noteCulture = repCult;
                 }
             }
             // Demande pour les Maths, avec omission de cette partie si Anglais et Culture G. ont été choisi
-            if (!((raTrap1 == 'y') || (raTrap1 == 'Y') && (raTrap2 == 'y') || (raTrap2 == 'Y'))) {
-                System.out.println("Avez-vous choisi le rattrapage de Mathématiques ? : y / n");
+            System.out.println(".".repeat(30));
+            if (!((raTrap1 == 'y') && (raTrap1 == 'Y') && (raTrap2 == 'y') && (raTrap2 == 'Y'))) {
+                System.out.println(demChoix + "e Mathématiques ? : y / n");
                 raTrap1 = In.readChar();
                 // Boucle note rattrapage Maths
                 if ((raTrap1 == 'y') || (raTrap1 == 'Y')) {
-                    System.out.println("Saisissez votre nouvelle note de Mathématiques : ");
+                    System.out.println(saiRattrap + "e Mathématiques : ");
+                    repMath = In.readFloat();
                     if (repMath > noteMaths) {
                         noteMaths = repMath;
                     }
+                    System.out.println(".".repeat(30));
                 }
             }
             /* Traitement de la première note de rattrapage (Machine à gaz)
@@ -202,7 +215,7 @@ public class ihm {
             // Affichage de fin post-rattrapage
             System.out.println("Après les rattrapages vous avez: " + pointsTotaux + " points" + "\nAinsi qu'une moyenne générale de: " + monFormat.format(moyenneTotal));
             if (moyenneTotal >= 10) {
-                System.out.println("Vous avez votre BTS CIEL !");
+                System.out.println(bravo + " !");
             } else {
                 System.out.println("Rapprochez-vous de votre professeur afin de réaliser une procédure de redoublement.");
             }
